@@ -1,0 +1,40 @@
+{
+    "layer": "top",
+    "position": "top",
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+
+    "modules-center": [
+        "clock"
+    ],
+
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory"
+    ],
+
+    "clock": {
+        "format": "{:%H:%M}"
+    },
+
+    "cpu": {
+        "format": "CPU {usage}%"
+    },
+
+    "memory": {
+        "format": "RAM {}%"
+    },
+
+    "network": {
+        "format-ethernet": "ETH {ipaddr}",
+        "format-disconnected": "Disconnected"
+    },
+
+    "pulseaudio": {
+        "format": "VOL {volume}%"
+    }
+}
