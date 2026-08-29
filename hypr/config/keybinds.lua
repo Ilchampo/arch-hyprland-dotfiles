@@ -40,7 +40,7 @@ hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
 
 -- Applications
-hl.bind(mainMod .. " + ENTER", hl.dsp.exec_cmd(terminal))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
