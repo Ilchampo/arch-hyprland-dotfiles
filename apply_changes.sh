@@ -130,12 +130,5 @@ fi
 TARGET_UID="$(id -u "${TARGET_USER}")"
 RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/${TARGET_UID}}"
 
-# Reload Hyprland as the session user with the runtime directory restored
-if [[ "${EUID}" -eq 0 ]]; then
-  sudo -u "${TARGET_USER}" XDG_RUNTIME_DIR="${RUNTIME_DIR}" hyprland reload
-else
-  XDG_RUNTIME_DIR="${RUNTIME_DIR}" hyprland reload
-fi
-
 echo "Success - Applied ${copied} item(s) to ${DEST} (user: ${TARGET_USER})."
 echo "Previous config saved to ${BACKUP_DIR}."
