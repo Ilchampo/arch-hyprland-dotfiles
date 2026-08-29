@@ -1,3 +1,17 @@
+-- Verdant palette (shared with Waybar and Alacritty)
+local verdant = {
+    bg     = "rgb(10180E)",
+    text   = "rgb(E4EBE0)",
+    muted  = "rgb(8A9584)",
+    grey   = "rgb(6A7466)",
+    fill   = "rgb(8FB56A)",
+    green  = "rgb(7DCE7A)",
+    accent = "rgb(D4A05A)",
+    danger = "rgb(D97070)",
+    active_border   = { colors = { "rgba(8fb56aee)", "rgba(d4a05aee)" }, angle = 45 },
+    inactive_border = "rgba(6a7466aa)",
+}
+
 -- Look and feel configuration
 hl.config({
     general = {
@@ -5,8 +19,10 @@ hl.config({
         gaps_out = 20,
         border_size = 2,
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border          = verdant.active_border,
+            inactive_border        = verdant.inactive_border,
+            nogroup_border         = verdant.inactive_border,
+            nogroup_border_active  = verdant.active_border,
         },
         resize_on_border = false,
         allow_tearing = false,
@@ -21,17 +37,39 @@ hl.config({
             enabled      = true,
             range        = 4,
             render_power = 3,
-            color        = 0xee1a1a1a,
+            color        = "rgba(10180eee)",
         },
         blur = {
             enabled   = true,
-            size      = 3,
-            passes    = 1,
-            vibrancy  = 0.1696,
+            size      = 5,
+            passes    = 2,
+            vibrancy  = 0.2,
         },
     },
     animations = {
         enabled = true,
+    },
+    group = {
+        col = {
+            border_active          = verdant.active_border,
+            border_inactive        = verdant.inactive_border,
+            border_locked_active   = "rgba(d4a05aee)",
+            border_locked_inactive = "rgba(6a7466aa)",
+        },
+        groupbar = {
+            enabled     = true,
+            font_family = "JetBrainsMono Nerd Font",
+            font_size   = 12,
+            gradients   = true,
+            text_color           = verdant.text,
+            text_color_inactive  = verdant.muted,
+            col = {
+                active          = "rgba(8fb56acc)",
+                inactive        = "rgba(1a2416cc)",
+                locked_active   = "rgba(d4a05acc)",
+                locked_inactive = "rgba(6a7466cc)",
+            },
+        },
     },
 })
 
@@ -57,5 +95,10 @@ hl.config({
     misc = {
         force_default_wallpaper = 0,
         disable_hyprland_logo   = true,
+        background_color        = verdant.bg,
+        font_family             = "JetBrainsMono Nerd Font",
+        col = {
+            splash = verdant.accent,
+        },
     },
 })
