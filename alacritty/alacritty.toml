@@ -1,0 +1,60 @@
+[terminal.shell]
+program = "/bin/bash"
+args = ["-c", "fastfetch; exec /bin/bash"]
+
+[window]
+opacity = 0.84
+padding = { x = 12, y = 10 }
+
+[colors]
+transparent_background_colors = false
+
+[colors.primary]
+background = "#10180E"
+foreground = "#E4EBE0"
+dim_foreground = "#8A9584"
+bright_foreground = "#F4F7F0"
+
+[colors.cursor]
+text = "CellBackground"
+cursor = "#D4A05A"
+
+[colors.vi_mode_cursor]
+text = "CellBackground"
+cursor = "#7DCE7A"
+
+[colors.selection]
+text = "CellForeground"
+background = "#2A3A24"
+
+[colors.search.matches]
+foreground = "#10180E"
+background = "#D4A05A"
+
+[colors.search.focused_match]
+foreground = "#10180E"
+background = "#7DCE7A"
+
+[colors.footer_bar]
+foreground = "#E4EBE0"
+background = "#1A2416"
+
+[colors.normal]
+black = "#1A2416"
+red = "#D97070"
+green = "#8FB56A"
+yellow = "#D4A05A"
+blue = "#7A9E8C"
+magenta = "#C4847A"
+cyan = "#7DB39A"
+white = "#E4EBE0"
+
+[colors.bright]
+black = "#6A7466"
+red = "#E88B80"
+green = "#7DCE7A"
+yellow = "#E8B86D"
+blue = "#9BBBA8"
+magenta = "#D4A090"
+cyan = "#A8D4C0"
+white = "#F4F7F0"
