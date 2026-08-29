@@ -1,0 +1,176 @@
+@define-color bg     rgba(16, 24, 14, 0.84);
+@define-color border rgba(184, 196, 168, 0.16);
+@define-color text   #E4EBE0;
+@define-color muted  #8A9584;
+@define-color accent #D4A05A;
+@define-color green  #7DCE7A;
+@define-color grey   #6A7466;
+@define-color fill   #8FB56A;
+@define-color danger #D97070;
+@define-color hover  rgba(228, 235, 224, 0.08);
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    color: @text;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+#pill-left,
+#pill-center,
+#pill-right {
+    background: @bg;
+    border: 1px solid @border;
+    border-radius: 20px;
+    padding: 0 12px;
+    margin: 0;
+}
+
+button {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    color: @text;
+}
+
+button:hover {
+    background: @hover;
+    border-radius: 12px;
+}
+
+/* Workspaces */
+#workspaces {
+    padding: 2px 0;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    margin: 2px 1px;
+    color: @text;
+    border-radius: 12px;
+}
+
+#workspaces button.active {
+    color: @text;
+    background: @hover;
+}
+
+#workspaces button.urgent {
+    color: @danger;
+}
+
+#workspaces button:hover {
+    background: @hover;
+}
+
+/* Center: date, time, connection */
+#clock {
+    padding: 0 10px 0 4px;
+    color: @text;
+}
+
+#network {
+    padding: 0 6px;
+    font-size: 12px;
+    min-width: 16px;
+}
+
+#network.ethernet,
+#network.wifi,
+#network.linked {
+    color: @green;
+}
+
+#network.disconnected,
+#network.disabled {
+    color: @grey;
+}
+
+/* Volume fill bar + percentage */
+#volume {
+    padding: 0 8px 0 4px;
+}
+
+#pulseaudio-slider {
+    margin: 0 2px;
+    padding: 0;
+}
+
+#pulseaudio-slider slider {
+    min-height: 0;
+    min-width: 0;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+
+#pulseaudio-slider trough {
+    min-height: 10px;
+    min-width: 72px;
+    border-radius: 8px;
+    background: rgba(228, 235, 224, 0.12);
+}
+
+#pulseaudio-slider highlight {
+    min-width: 8px;
+    border-radius: 8px;
+    background: @fill;
+}
+
+#pulseaudio-slider.muted highlight {
+    background: @grey;
+}
+
+#pulseaudio {
+    min-width: 44px;
+    padding: 0 4px 0 6px;
+}
+
+#pulseaudio.muted {
+    color: @muted;
+}
+
+/* CPU / RAM */
+#cpu,
+#memory {
+    padding: 0 10px;
+}
+
+/* Power options */
+#custom-lock {
+    padding: 0 10px 0 12px;
+    margin-left: 4px;
+    border-left: 1px solid @border;
+}
+
+#custom-reboot,
+#custom-shutdown {
+    padding: 0 10px;
+}
+
+#custom-lock:hover
+#custom-reboot:hover
+#custom-shutdown:hover {
+    color: @danger;
+}
+
+tooltip {
+    background: @bg;
+    border: 1px solid @border;
+    border-radius: 8px;
+}
+
+tooltip label {
+    color: @text;
+    padding: 4px 8px;
+}

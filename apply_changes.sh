@@ -130,7 +130,5 @@ fi
 TARGET_UID="$(id -u "${TARGET_USER}")"
 RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/${TARGET_UID}}"
 
-hyprctl reload
-
 echo "Success - Applied ${copied} item(s) to ${DEST} (user: ${TARGET_USER})."
 echo "Previous config saved to ${BACKUP_DIR}."
