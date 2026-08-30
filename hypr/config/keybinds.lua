@@ -18,7 +18,8 @@ local mainMod = "SUPER"
 
 -- Windows
 hl.bind(mainMod .. " + Q",          hl.dsp.window.close())
-hl.bind(mainMod .. " + F",          hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + G",          hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + F",          hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + SHIFT + Q",  hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 
 -- Windows focus
