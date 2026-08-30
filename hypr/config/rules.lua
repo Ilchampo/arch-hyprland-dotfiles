@@ -34,3 +34,11 @@ hl.layer_rule({
     blur  = true,
     ignore_alpha = 0.2,
 })
+
+-- Blur wofi menu
+hl.layer_rule({
+    name  = "wofi-blur",
+    match = { namespace = "^wofi$" },
+    blur  = true,
+    ignore_alpha = 0.2,
+})

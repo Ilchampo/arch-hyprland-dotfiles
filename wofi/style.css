@@ -1,0 +1,79 @@
+@define-color bg     rgba(16, 24, 14, 0.84);
+@define-color input  rgba(26, 36, 22, 0.90);
+@define-color border rgba(143, 181, 106, 0.93);
+@define-color text   #E4EBE0;
+@define-color muted  #8A9584;
+@define-color fill   #8FB56A;
+@define-color hover  rgba(228, 235, 224, 0.08);
+@define-color select rgba(143, 181, 106, 0.35);
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: @text;
+}
+
+window {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+#outer-box {
+    margin: 8px;
+    padding: 8px;
+    background-color: @bg;
+    border: 2px solid @border;
+    border-radius: 10px;
+}
+
+#input {
+    margin: 4px 8px 10px 8px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: @input;
+    color: @text;
+    box-shadow: none;
+    outline: none;
+}
+
+#input:focus {
+    border: 1px solid @fill;
+    box-shadow: none;
+}
+
+#scroll {
+    margin: 0 4px 4px 4px;
+}
+
+#inner-box {
+    padding: 0;
+}
+
+#entry {
+    padding: 6px 10px;
+    margin: 2px 0;
+    border-radius: 8px;
+}
+
+#entry:selected {
+    background-color: @select;
+}
+
+#entry:hover {
+    background-color: @hover;
+}
+
+#img {
+    margin-right: 10px;
+}
+
+#text {
+    color: @text;
+}
+
+#entry:selected #text {
+    color: #F4F7F0;
+}
