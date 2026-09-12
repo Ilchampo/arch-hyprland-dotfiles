@@ -7,6 +7,8 @@ local editor = "nvim"
 local ide = "cursor"
 local music = "spotify-launcher"
 local communication = "discord"
+local screenshot_screen = "grim ~/Pictures/Screenshots/$(date +'screenshot_%Y-%m-%d-%H%M%S.png')"
+local screenshot_region = "slurp | grim -g - ~/Pictures/Screenshots/$(date +'screenshot_%Y-%m-%d-%H%M%S.png')"  
 
 -- Function to resize windows with keyboard
 local function resize(x, y) 
@@ -43,12 +45,14 @@ hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
 -- Applications
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd(editor))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(ide))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(music))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(communication))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(screenshot_screen))
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(screenshot_region))
 
 -- Workspaces - switch and move, maximum 5 workspaces by default
 for i = 1, 5 do

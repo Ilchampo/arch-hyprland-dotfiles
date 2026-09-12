@@ -29,7 +29,8 @@
         "orientation": "horizontal",
         "modules": [
             "clock",
-            "network"
+            "network",
+            "group/media"
         ]
     },
 
@@ -73,13 +74,56 @@
         "tooltip-format": "{:%A, %d %B %Y}"
     },
 
+    "group/media": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/media-prev",
+            "custom/media-play",
+            "custom/media-next",
+            "custom/media-title"
+        ]
+    },
+
+    "custom/media-prev": {
+        "format": "󰒮",
+        "tooltip-format": "Previous",
+        "on-click": "playerctl previous"
+    },
+
+    "custom/media-play": {
+        "exec": "$HOME/.config/waybar/scripts/media-play.sh",
+        "return-type": "json",
+        "interval": 1,
+        "format": "{icon}",
+        "format-icons": {
+            "Playing": "󰏤",
+            "Paused": "󰐊",
+            "Stopped": "󰐊"
+        },
+        "on-click": "playerctl play-pause"
+    },
+
+    "custom/media-next": {
+        "format": "󰒭",
+        "tooltip-format": "Next",
+        "on-click": "playerctl next"
+    },
+
+    "custom/media-title": {
+        "exec": "$HOME/.config/waybar/scripts/media-ticker.py",
+        "return-type": "json",
+        "escape": true,
+        "restart-interval": 2,
+        "tooltip": true
+    },
+
     "network": {
         "interval": 5,
-        "format-ethernet": "●",
-        "format-wifi": "●",
-        "format-linked": "●",
-        "format-disconnected": "●",
-        "format-disabled": "●",
+        "format-ethernet": "●  Connected",
+        "format-wifi": "●  Connected",
+        "format-linked": "●  Connected",
+        "format-disconnected": "●  Disconnected",
+        "format-disabled": "●  Disconnected",
         "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
         "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}",
         "tooltip-format-disconnected": "Disconnected"

@@ -79,9 +79,9 @@ button:hover {
 }
 
 #network {
-    padding: 0 6px;
+    padding: 0 4px 0 6px;
     font-size: 12px;
-    min-width: 16px;
+    min-width: 8.2em;
 }
 
 #network.ethernet,
@@ -93,6 +93,38 @@ button:hover {
 #network.disconnected,
 #network.disabled {
     color: @grey;
+}
+
+/* Center: media controls + scrolling title */
+#media {
+    margin-left: 8px;
+    padding-left: 10px;
+    border-left: 1px solid @border;
+}
+
+#custom-media-prev,
+#custom-media-play,
+#custom-media-next {
+    padding: 0 8px;
+}
+
+#custom-media-prev:hover,
+#custom-media-play:hover,
+#custom-media-next:hover {
+    color: @accent;
+    background: @hover;
+    border-radius: 12px;
+}
+
+#custom-media-title {
+    padding: 0 4px 0 6px;
+    min-width: 15.6em;
+    color: @text;
+}
+
+#custom-media-title.paused,
+#custom-media-title.stopped {
+    color: @muted;
 }
 
 /* Volume fill bar + percentage */
