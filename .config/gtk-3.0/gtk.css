@@ -15,32 +15,8 @@
 @define-color verdant_green    #7DCE7A;
 @define-color verdant_danger   #D97070;
 
-/* Override Arc-Dark's blue accent so GTK widgets and
- * ColorScheme-Highlight icons pick up the Verdant palette. */
-@define-color theme_fg_color #E4EBE0;
-@define-color theme_text_color #E4EBE0;
-@define-color theme_bg_color #10180E;
-@define-color theme_base_color #1A2416;
-@define-color theme_selected_bg_color #8FB56A;
-@define-color theme_selected_fg_color #E4EBE0;
-@define-color fg_color #E4EBE0;
-@define-color text_color #E4EBE0;
-@define-color bg_color #10180E;
-@define-color base_color #1A2416;
-@define-color selected_bg_color #8FB56A;
-@define-color selected_fg_color #E4EBE0;
-@define-color theme_unfocused_fg_color #8A9584;
-@define-color theme_unfocused_text_color #8A9584;
-@define-color theme_unfocused_bg_color #1A2416;
-@define-color theme_unfocused_base_color #1A2416;
-@define-color theme_unfocused_selected_bg_color #6A7466;
-@define-color theme_unfocused_selected_fg_color #8A9584;
-@define-color borders #6A7466;
-@define-color warning_color #D4A05A;
-@define-color error_color #D97070;
-@define-color success_color #7DCE7A;
-@define-color content_view_bg #10180E;
-
+/* Shared controls, menus and dialogs live in the Verdant GTK theme.
+ * Keep only Thunar-specific layout/selection refinements here. */
 
 /* Main Thunar window */
 .thunar {
@@ -150,7 +126,7 @@ iconview rubberband,
 .thunar button:checked,
 .thunar button:active {
     background-color: @verdant_fill;
-    color: @verdant_fg;
+    color: @verdant_bg;
 }
 
 

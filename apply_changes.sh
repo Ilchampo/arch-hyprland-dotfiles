@@ -25,7 +25,7 @@ should_skip() {
   local name="$1"
 
   case "${name}" in
-    .|..|.git|.gitignore|apply_changes.sh|README.md|LICENSE|backup)
+    .|..|.git|.gitignore|.agents|.codex|apply_changes.sh|README.md|LICENSE|backup)
       return 0
       ;;
   esac
@@ -195,6 +195,33 @@ if [[ "${copied}" -eq 0 ]]; then
 fi
 
 echo "Success - Applied ${copied} item(s) (user: ${TARGET_USER})."
+
+# GTK on Wayland can prefer desktop-session settings over settings.ini.
+# Keep the session theme in sync, but never write root's dconf database.
+gtk_settings="${REPO_ROOT}/.config/gtk-3.0/settings.ini"
+if [[ -f "${gtk_settings}" ]] && command -v gsettings >/dev/null 2>&1; then
+  if [[ "${EUID}" -eq 0 ]]; then
+    echo "Run this script without sudo in your desktop session to sync GTK theme settings."
+  elif gsettings list-keys org.gnome.desktop.interface >/dev/null 2>&1; then
+    for pair in gtk-theme-name:gtk-theme gtk-icon-theme-name:icon-theme; do
+      ini_key="${pair%%:*}"
+      session_key="${pair#*:}"
+      theme_value="$(awk -F= -v key="${ini_key}" '$1 == key { print substr($0, index($0, "=") + 1); exit }' "${gtk_settings}")"
+      [[ -z "${theme_value}" ]] && continue
+
+      previous_value="$(gsettings get org.gnome.desktop.interface "${session_key}")"
+      # Save shell-escaped restore commands alongside the file backup.
+      printf 'gsettings set org.gnome.desktop.interface %q %q\n' \
+        "${session_key}" "${previous_value}" >> "${BACKUP_DIR}/restore-gtk-session.sh"
+      if gsettings set org.gnome.desktop.interface "${session_key}" "${theme_value}"; then
+        echo "Set session ${session_key} to ${theme_value}."
+      else
+        echo "Could not sync ${session_key}; re-run without sudo inside your desktop session." >&2
+      fi
+    done
+  fi
+fi
+
 if [[ "${skipped}" -gt 0 ]]; then
   echo "Skipped ${skipped} item(s). Re-run with sudo to apply system paths."
 fi
