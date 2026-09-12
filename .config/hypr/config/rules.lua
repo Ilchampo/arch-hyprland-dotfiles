@@ -1,3 +1,11 @@
+-- Keep the five default workspaces visible and clickable in Waybar
+for i = 1, 5 do
+    hl.workspace_rule({
+        workspace = i,
+        persistent = true,
+    })
+end
+
 -- Ignore applications requests to be maximized
 local suppressMaximizeRule = hl.window_rule({
     name  = "suppress-maximize-events",

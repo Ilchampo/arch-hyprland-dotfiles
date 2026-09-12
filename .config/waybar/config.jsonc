@@ -21,7 +21,7 @@
     "group/pill-left": {
         "orientation": "horizontal",
         "modules": [
-            "hyprland/workspaces"
+            "ext/workspaces"
         ]
     },
 
@@ -54,17 +54,16 @@
         ]
     },
 
-    "hyprland/workspaces": {
+    "ext/workspaces": {
         "all-outputs": true,
-        "sort-by-number": true,
+        "sort-by-id": true,
+        "ignore-hidden": false,
         "format": "{id}  {icon}",
+        "on-click": "activate",
         "format-icons": {
             "active": "<span foreground='#D4A05A'>●</span>",
             "urgent": "<span foreground='#D97070'>●</span>",
             "default": "<span foreground='#6A7466'>●</span>"
-        },
-        "persistent-workspaces": {
-            "*": 5
         }
     },
 
