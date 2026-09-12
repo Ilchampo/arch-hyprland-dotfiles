@@ -1,0 +1,177 @@
+/* =================================
+ * Verdant GTK / Thunar overrides
+ * ================================= */
+
+@define-color verdant_bg       #10180E;
+@define-color verdant_bg_alt   #1A2416;
+@define-color verdant_surface  #2A3A24;
+@define-color verdant_border   #6A7466;
+
+@define-color verdant_fg       #E4EBE0;
+@define-color verdant_fg_dim   #8A9584;
+
+@define-color verdant_accent   #D4A05A;
+@define-color verdant_fill     #8FB56A;
+@define-color verdant_green    #7DCE7A;
+@define-color verdant_danger   #D97070;
+
+/* Override Arc-Dark's blue accent so GTK widgets and
+ * ColorScheme-Highlight icons pick up the Verdant palette. */
+@define-color theme_fg_color #E4EBE0;
+@define-color theme_text_color #E4EBE0;
+@define-color theme_bg_color #10180E;
+@define-color theme_base_color #1A2416;
+@define-color theme_selected_bg_color #8FB56A;
+@define-color theme_selected_fg_color #E4EBE0;
+@define-color fg_color #E4EBE0;
+@define-color text_color #E4EBE0;
+@define-color bg_color #10180E;
+@define-color base_color #1A2416;
+@define-color selected_bg_color #8FB56A;
+@define-color selected_fg_color #E4EBE0;
+@define-color theme_unfocused_fg_color #8A9584;
+@define-color theme_unfocused_text_color #8A9584;
+@define-color theme_unfocused_bg_color #1A2416;
+@define-color theme_unfocused_base_color #1A2416;
+@define-color theme_unfocused_selected_bg_color #6A7466;
+@define-color theme_unfocused_selected_fg_color #8A9584;
+@define-color borders #6A7466;
+@define-color warning_color #D4A05A;
+@define-color error_color #D97070;
+@define-color success_color #7DCE7A;
+@define-color content_view_bg #10180E;
+
+
+/* Main Thunar window */
+.thunar {
+    background-color: @verdant_bg;
+    color: @verdant_fg;
+}
+
+
+/* File view */
+.thunar .standard-view,
+.thunar .standard-view .view,
+.thunar iconview,
+.thunar iconview.view,
+.thunar treeview.view {
+    background-color: @verdant_bg;
+    color: @verdant_fg;
+}
+
+
+/* Selected files — Thunar only paints this on the name label, not the icon.
+ * Keep it translucent so the icon is never covered. */
+.thunar .standard-view .view:selected,
+.thunar .standard-view .view:selected:focus,
+.thunar iconview:selected,
+.thunar iconview.view:selected,
+.thunar treeview.view:selected,
+.thunar treeview.view:selected:focus {
+    background-color: rgba(143, 181, 106, 0.40);
+    color: @verdant_fg;
+}
+
+
+/* Rubberband / area selection
+ *
+ * ExoIconView (Thunar icon/compact view) does not use a child `rubberband`
+ * node. It adds class `rubberband` to the view and gtk_render_background()s
+ * the rectangle. `.thunar .standard-view .view` is opaque near-black, so a
+ * more specific `.view.rubberband` rule is required or the lasso is solid.
+ */
+.thunar .view.rubberband,
+.thunar .standard-view .view.rubberband,
+.thunar iconview.rubberband,
+.thunar iconview.view.rubberband {
+    background-color: rgba(212, 160, 90, 0.18);
+    border: 1px solid #D4A05A;
+}
+
+/* GtkTreeView details view still uses a child rubberband node */
+rubberband,
+.rubberband,
+.view rubberband,
+.content-view rubberband,
+treeview.view rubberband,
+flowbox rubberband,
+iconview rubberband,
+.thunar rubberband,
+.thunar .view rubberband,
+.thunar iconview rubberband,
+.thunar .standard-view rubberband {
+    background-color: rgba(212, 160, 90, 0.18);
+    border: 1px solid #D4A05A;
+}
+
+
+/* Sidebar */
+.thunar .sidebar,
+.thunar .sidebar .view {
+    background-color: @verdant_bg_alt;
+    color: @verdant_fg_dim;
+}
+
+.thunar .sidebar .view:selected {
+    background-color: alpha(@verdant_fill, 0.55);
+    color: @verdant_fg;
+}
+
+
+/* Toolbar */
+.thunar toolbar {
+    background-color: @verdant_bg;
+    color: @verdant_fg;
+
+    border-bottom: 1px solid @verdant_border;
+}
+
+
+/* Path / location entry */
+.thunar entry {
+    background-color: @verdant_bg_alt;
+    color: @verdant_fg;
+
+    border: 1px solid @verdant_border;
+    border-radius: 6px;
+}
+
+
+/* Buttons */
+.thunar button {
+    background-color: transparent;
+    color: @verdant_fg;
+}
+
+.thunar button:hover {
+    background-color: @verdant_surface;
+}
+
+.thunar button:checked,
+.thunar button:active {
+    background-color: @verdant_fill;
+    color: @verdant_fg;
+}
+
+
+/* Status bar */
+.thunar statusbar {
+    background-color: @verdant_bg;
+    color: @verdant_fg_dim;
+
+    border-top: 1px solid @verdant_border;
+}
+
+
+/* Scrollbars */
+.thunar scrollbar slider {
+    background-color: @verdant_border;
+
+    border-radius: 8px;
+    min-width: 6px;
+    min-height: 6px;
+}
+
+.thunar scrollbar slider:hover {
+    background-color: @verdant_accent;
+}
