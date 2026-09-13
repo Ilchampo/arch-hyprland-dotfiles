@@ -1,0 +1,25 @@
+{
+  "name": "Reef",
+  "colors": {
+    "bg": "071D20",
+    "base": "0D2C30",
+    "surface": "19474B",
+    "text": "E0F5EF",
+    "muted": "8DB6B2",
+    "border": "497B7C",
+    "fill": "4DCEC1",
+    "success": "92D99E",
+    "accent": "FFB08B",
+    "danger": "F27F91",
+    "bright": "F3FFFA",
+    "blue": "62AED5",
+    "magenta": "C293D8",
+    "cyan": "54D6D0",
+    "bright_red": "FFA8AF",
+    "bright_yellow": "F5D88C",
+    "bright_blue": "9DD3EE",
+    "bright_magenta": "DEB8EF",
+    "bright_cyan": "9AF0E4",
+    "edge": "9BCBC4"
+  }
+}
