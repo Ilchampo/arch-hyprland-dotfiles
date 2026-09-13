@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72">
+  <circle cx="36" cy="36" r="35" fill="#{{surface}}" stroke="#{{fill}}" stroke-width="1.5"/>
+  <circle cx="36" cy="27" r="11" fill="#{{text}}"/>
+  <path d="M16 58c1-13 8-19 20-19s19 6 20 19" fill="#{{text}}"/>
+</svg>

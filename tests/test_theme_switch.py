@@ -78,6 +78,30 @@ class Themes(unittest.TestCase):
         self.assertIn(['makoctl','reload'], calls)
         self.assertFalse(any('thunar' in c for c in calls))
 
+    def test_login_theme_sync_is_optional_and_limited_to_ids(self):
+        selection = self.root / 'login-current'
+        assets = self.root / 'login-themes'
+        self.assertIsNone(module.sync_greeter('abyss', selection, assets))
+        selection.write_text('verdant\n')
+        self.assertIn('not installed', module.sync_greeter('abyss', selection, assets))
+        (assets / 'abyss').mkdir(parents=True)
+        (assets / 'abyss/regreet.toml').write_text('skip_selection = true\n')
+        self.assertIsNone(module.sync_greeter('abyss', selection, assets))
+        self.assertEqual(selection.read_text(), 'abyss\n')
+        self.assertIn('Invalid', module.sync_greeter('../abyss', selection, assets))
+        self.assertEqual(selection.read_text(), 'abyss\n')
+
+    def test_login_sync_rejects_symlink(self):
+        target = self.root / 'protected'
+        target.write_text('unchanged')
+        selection = self.root / 'login-current'
+        selection.symlink_to(target)
+        assets = self.root / 'login-themes'
+        (assets / 'abyss').mkdir(parents=True)
+        (assets / 'abyss/regreet.toml').write_text('')
+        self.assertIn('Could not update', module.sync_greeter('abyss', selection, assets))
+        self.assertEqual(target.read_text(), 'unchanged')
+
     def test_file_transaction_rolls_back(self):
         a, b = self.root / 'a', self.root / 'b'
         a.write_bytes(b'old'); b.write_bytes(b'old')

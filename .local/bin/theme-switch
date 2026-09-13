@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
@@ -100,8 +101,36 @@ def command(args):
     return subprocess.run(args, text=True, capture_output=True, timeout=10)
 
 
+def sync_greeter(slug, selection=Path('/var/lib/dotfiles-greeter/current'),
+                 assets=Path('/usr/local/share/dotfiles-greeter/themes')):
+    """Publish only the theme ID; login assets remain root-owned and preinstalled."""
+    if not selection.exists():
+        return None  # Graphical login is optional until setup_greeter.sh is run.
+    if not re.fullmatch(r'[a-z][a-z0-9-]{0,47}', slug):
+        return 'Invalid login theme ID'
+    if not (assets / slug / 'regreet.toml').is_file():
+        return 'Login theme is not installed; run sudo ./setup_greeter.sh from the repository'
+    try:
+        fd = os.open(selection, os.O_WRONLY | os.O_NOFOLLOW)
+        with os.fdopen(fd, 'wb') as stream:
+            if not stat.S_ISREG(os.fstat(stream.fileno()).st_mode):
+                return 'Login theme selection is not a regular file'
+            fcntl.flock(stream, fcntl.LOCK_EX)
+            stream.truncate(0)
+            stream.write((slug + '\n').encode())
+            stream.flush()
+            os.fsync(stream.fileno())
+    except OSError as error:
+        return f'Could not update login theme: {error}'
+    return None
+
+
 def refresh(root, slug, theme):
     warnings = []
+    if root.resolve() == Path.home().resolve():
+        warning = sync_greeter(slug)
+        if warning:
+            warnings.append(warning)
     def run(args, optional=False):
         try:
             result = command(args)

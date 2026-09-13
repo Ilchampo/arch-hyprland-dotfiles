@@ -1,0 +1,94 @@
+/* A centered translucent card over the full-screen wallpaper. GTK 4 CSS. */
+@define-color bg #{{bg}};
+@define-color base #{{base}};
+@define-color surface #{{surface}};
+@define-color text #{{text}};
+@define-color muted #{{muted}};
+@define-color fill #{{fill}};
+@define-color accent #{{accent}};
+@define-color danger #{{danger}};
+
+window { background-color: @bg; color: @text; }
+label { color: @text; text-shadow: none; }
+frame.background {
+    background-color: alpha(@bg, 0.86);
+    border: 1px solid alpha(@text, 0.22);
+    border-radius: 24px;
+    box-shadow: 0 18px 60px alpha(black, 0.40);
+    padding: 24px 30px;
+}
+frame.background > grid { padding: 4px; }
+/* ReGreet's first grid label is its greeting/authentication message. */
+frame.background > grid > label:first-child {
+    background-image: url("avatar.svg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: 72px 72px;
+    padding-top: 88px;
+    padding-bottom: 8px;
+    font-size: 22px;
+    font-weight: 600;
+}
+entry, passwordentry, combobox button {
+    background-image: none;
+    background-color: alpha(@text, 0.09);
+    color: @text;
+    border: 1px solid alpha(@text, 0.20);
+    border-radius: 12px;
+    min-height: 36px;
+    padding: 5px 12px;
+    box-shadow: none;
+    outline-color: @accent;
+}
+entry:focus-within, passwordentry:focus-within, combobox button:focus {
+    border-color: @accent;
+    box-shadow: 0 0 0 2px alpha(@accent, 0.20);
+}
+passwordentry entry { background: transparent; border: none; box-shadow: none; padding: 0; }
+button {
+    background-image: none;
+    background-color: alpha(@text, 0.08);
+    color: @text;
+    border: 1px solid alpha(@text, 0.16);
+    border-radius: 12px;
+    padding: 9px 18px;
+    min-height: 24px;
+    box-shadow: none;
+    text-shadow: none;
+}
+button:hover { background-color: alpha(@text, 0.16); }
+button:active { background-color: alpha(@fill, 0.35); }
+button.suggested-action {
+    background-image: none;
+    background-color: @fill;
+    color: @bg;
+    border-color: @fill;
+    font-weight: 600;
+}
+button.suggested-action:hover { background-color: @accent; border-color: @accent; }
+button.suggested-action label { color: @bg; }
+button:disabled { color: @muted; }
+button.destructive-action {
+    background-image: none;
+    background-color: alpha(@bg, 0.80);
+    border-color: alpha(@text, 0.22);
+    color: @text;
+    border-radius: 24px;
+}
+button.destructive-action:hover { background-color: @danger; color: @bg; }
+button.destructive-action:hover label { color: @bg; }
+popover, popover contents {
+    background-color: @base;
+    color: @text;
+    border-color: alpha(@text, 0.22);
+    border-radius: 12px;
+}
+row:selected, modelbutton:hover, selection { background-color: @fill; color: @bg; }
+/* Overlay children: wallpaper, login card, then the clock frame. */
+overlay > frame.background:nth-child(3) {
+    background-color: alpha(@bg, 0.64);
+    border-color: alpha(@text, 0.12);
+    box-shadow: none;
+    padding: 12px 24px;
+}
+infobar { background-color: @base; color: @text; border-radius: 12px; }

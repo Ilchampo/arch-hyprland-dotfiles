@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -u
+
+# Only a short theme ID is user-writable. Executables, CSS and wallpapers are
+# installed by root; the greeter never loads configuration from a user's home.
+assets=/usr/local/share/dotfiles-greeter/themes
+selection=/var/lib/dotfiles-greeter/current
+theme=verdant
+if [[ -r "$selection" ]]; then
+    candidate="$(/usr/bin/flock --shared "$selection" /usr/bin/head -c 64 "$selection")"
+    if [[ "$candidate" =~ ^[a-z][a-z0-9-]{0,47}$ && -r "$assets/$candidate/regreet.toml" ]]; then
+        theme="$candidate"
+    fi
+fi
+
+# A private session bus and disabled portals avoid desktop-portal startup delays.
+# Cage -s preserves Ctrl+Alt+Fn access; -mlast displays on one output.
+/usr/bin/env GTK_USE_PORTAL=0 GDK_DEBUG=no-portals GDK_BACKEND=wayland \
+    XDG_DATA_DIRS=/usr/local/share/dotfiles-greeter:/usr/local/share:/usr/share \
+    /usr/bin/dbus-run-session /usr/bin/cage -s -mlast -- \
+    /usr/bin/regreet --config "$assets/$theme/regreet.toml" \
+    --style "$assets/$theme/regreet.css"
+status=$?
+if [[ "$status" -ne 0 ]]; then
+    echo "Graphical greeter exited with status $status; falling back to text login." >&2
+    exec /usr/bin/agreety --cmd /usr/bin/start-hyprland
+fi
+exit 0

@@ -1,0 +1,25 @@
+# Remember the last authenticated user/session and go directly to their password.
+# On first login, choose your user and the plain "Hyprland" session.
+skip_selection = true
+
+[background]
+path = "/usr/local/share/dotfiles-greeter/themes/{{id}}/wallpaper.png"
+fit = "Cover"
+
+[GTK]
+application_prefer_dark_theme = true
+cursor_theme_name = "Adwaita"
+font_name = "Noto Sans 12"
+icon_theme_name = "Adwaita"
+theme_name = "Adwaita"
+
+[appearance]
+greeting_msg = "Welcome back"
+
+[widget.clock]
+format = "%A, %d %B  ·  %H:%M"
+resolution = "1s"
+
+[commands]
+reboot = ["systemctl", "reboot"]
+poweroff = ["systemctl", "poweroff"]
