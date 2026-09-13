@@ -4,7 +4,7 @@ A themed Arch Linux + Hyprland desktop with five looks—**Verdant, Abyss, Mono,
 
 ## Demo
 
-[![Hyprarch themes](https://i.imgur.com/dh6IVYP.mp4)](https://i.imgur.com/dh6IVYP.mp4)
+![Theme selector](./docs/themes.gif)
 
 ## How to apply the scripts
 
@@ -28,6 +28,8 @@ Start from an existing Arch Linux installation with Hyprland. Install the [requi
    ```
 
    This installs ReGreet and its dependencies, sets up the themed login screen, and enables greetd. It does not end your current session. Reboot when ready, select your user and **Hyprland**, and log in. Your user and session are remembered for future logins.
+
+![Greeter](./docs/greetd-preview.png)
 
 4. **Choose your theme.** Press **Super + W**, select a theme, and press Enter or click. Press Escape to cancel. Your choice is saved for future logins and also updates the login screen's theme.
 
