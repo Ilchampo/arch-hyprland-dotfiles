@@ -4,7 +4,7 @@ A themed Arch Linux + Hyprland desktop with five looks—**Verdant, Abyss, Mono,
 
 ## Demo
 
-![Hyprarch](https://i.imgur.com/dh6IVYP.mp4)
+[![Hyprarch themes](https://i.imgur.com/dh6IVYP.mp4)](https://i.imgur.com/dh6IVYP.mp4)
 
 ## How to apply the scripts
 
