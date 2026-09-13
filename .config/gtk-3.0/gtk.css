@@ -1,27 +1,10 @@
-/* =================================
- * Verdant GTK / Thunar overrides
- * ================================= */
-
-@define-color verdant_bg       #10180E;
-@define-color verdant_bg_alt   #1A2416;
-@define-color verdant_surface  #2A3A24;
-@define-color verdant_border   #6A7466;
-
-@define-color verdant_fg       #E4EBE0;
-@define-color verdant_fg_dim   #8A9584;
-
-@define-color verdant_accent   #D4A05A;
-@define-color verdant_fill     #8FB56A;
-@define-color verdant_green    #7DCE7A;
-@define-color verdant_danger   #D97070;
-
-/* Shared controls, menus and dialogs live in the Verdant GTK theme.
+/* Shared controls, menus and dialogs live in the selected GTK theme.
  * Keep only Thunar-specific layout/selection refinements here. */
 
 /* Main Thunar window */
 .thunar {
-    background-color: @verdant_bg;
-    color: @verdant_fg;
+    background-color: @palette_bg;
+    color: @palette_fg;
 }
 
 
@@ -31,8 +14,8 @@
 .thunar iconview,
 .thunar iconview.view,
 .thunar treeview.view {
-    background-color: @verdant_bg;
-    color: @verdant_fg;
+    background-color: @palette_bg;
+    color: @palette_fg;
 }
 
 
@@ -44,8 +27,8 @@
 .thunar iconview.view:selected,
 .thunar treeview.view:selected,
 .thunar treeview.view:selected:focus {
-    background-color: rgba(143, 181, 106, 0.40);
-    color: @verdant_fg;
+    background-color: alpha(@palette_fill, 0.40);
+    color: @palette_fg;
 }
 
 
@@ -60,8 +43,8 @@
 .thunar .standard-view .view.rubberband,
 .thunar iconview.rubberband,
 .thunar iconview.view.rubberband {
-    background-color: rgba(212, 160, 90, 0.18);
-    border: 1px solid #D4A05A;
+    background-color: alpha(@palette_accent, 0.18);
+    border: 1px solid @palette_accent;
 }
 
 /* GtkTreeView details view still uses a child rubberband node */
@@ -76,39 +59,39 @@ iconview rubberband,
 .thunar .view rubberband,
 .thunar iconview rubberband,
 .thunar .standard-view rubberband {
-    background-color: rgba(212, 160, 90, 0.18);
-    border: 1px solid #D4A05A;
+    background-color: alpha(@palette_accent, 0.18);
+    border: 1px solid @palette_accent;
 }
 
 
 /* Sidebar */
 .thunar .sidebar,
 .thunar .sidebar .view {
-    background-color: @verdant_bg_alt;
-    color: @verdant_fg_dim;
+    background-color: @palette_bg_alt;
+    color: @palette_fg_dim;
 }
 
 .thunar .sidebar .view:selected {
-    background-color: alpha(@verdant_fill, 0.55);
-    color: @verdant_fg;
+    background-color: alpha(@palette_fill, 0.55);
+    color: @palette_fg;
 }
 
 
 /* Toolbar */
 .thunar toolbar {
-    background-color: @verdant_bg;
-    color: @verdant_fg;
+    background-color: @palette_bg;
+    color: @palette_fg;
 
-    border-bottom: 1px solid @verdant_border;
+    border-bottom: 1px solid @palette_border;
 }
 
 
 /* Path / location entry */
 .thunar entry {
-    background-color: @verdant_bg_alt;
-    color: @verdant_fg;
+    background-color: @palette_bg_alt;
+    color: @palette_fg;
 
-    border: 1px solid @verdant_border;
+    border: 1px solid @palette_border;
     border-radius: 6px;
 }
 
@@ -116,32 +99,32 @@ iconview rubberband,
 /* Buttons */
 .thunar button {
     background-color: transparent;
-    color: @verdant_fg;
+    color: @palette_fg;
 }
 
 .thunar button:hover {
-    background-color: @verdant_surface;
+    background-color: @palette_surface;
 }
 
 .thunar button:checked,
 .thunar button:active {
-    background-color: @verdant_fill;
-    color: @verdant_bg;
+    background-color: @palette_fill;
+    color: @palette_bg;
 }
 
 
 /* Status bar */
 .thunar statusbar {
-    background-color: @verdant_bg;
-    color: @verdant_fg_dim;
+    background-color: @palette_bg;
+    color: @palette_fg_dim;
 
-    border-top: 1px solid @verdant_border;
+    border-top: 1px solid @palette_border;
 }
 
 
 /* Scrollbars */
 .thunar scrollbar slider {
-    background-color: @verdant_border;
+    background-color: @palette_border;
 
     border-radius: 8px;
     min-width: 6px;
@@ -149,5 +132,5 @@ iconview rubberband,
 }
 
 .thunar scrollbar slider:hover {
-    background-color: @verdant_accent;
+    background-color: @palette_accent;
 }

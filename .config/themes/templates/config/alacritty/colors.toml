@@ -1,0 +1,52 @@
+[colors]
+transparent_background_colors = false
+
+[colors.primary]
+background = "#{{bg}}"
+foreground = "#{{text}}"
+dim_foreground = "#{{muted}}"
+bright_foreground = "#{{bright}}"
+
+[colors.cursor]
+text = "CellBackground"
+cursor = "#{{accent}}"
+
+[colors.vi_mode_cursor]
+text = "CellBackground"
+cursor = "#{{success}}"
+
+[colors.selection]
+text = "CellForeground"
+background = "#{{surface}}"
+
+[colors.search.matches]
+foreground = "#{{bg}}"
+background = "#{{accent}}"
+
+[colors.search.focused_match]
+foreground = "#{{bg}}"
+background = "#{{success}}"
+
+[colors.footer_bar]
+foreground = "#{{text}}"
+background = "#{{base}}"
+
+[colors.normal]
+black = "#{{base}}"
+red = "#{{danger}}"
+green = "#{{fill}}"
+yellow = "#{{accent}}"
+blue = "#{{blue}}"
+magenta = "#{{magenta}}"
+cyan = "#{{cyan}}"
+white = "#{{text}}"
+
+[colors.bright]
+black = "#{{border}}"
+red = "#{{bright_red}}"
+green = "#{{success}}"
+yellow = "#{{bright_yellow}}"
+blue = "#{{bright_blue}}"
+magenta = "#{{bright_magenta}}"
+cyan = "#{{bright_cyan}}"
+white = "#{{bright}}"

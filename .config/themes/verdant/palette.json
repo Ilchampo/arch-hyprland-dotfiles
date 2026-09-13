@@ -1,0 +1,25 @@
+{
+  "name": "Verdant",
+  "colors": {
+    "bg": "10180E",
+    "base": "1A2416",
+    "surface": "2A3A24",
+    "text": "E4EBE0",
+    "muted": "8A9584",
+    "border": "6A7466",
+    "fill": "8FB56A",
+    "success": "7DCE7A",
+    "accent": "D4A05A",
+    "danger": "D97070",
+    "bright": "F4F7F0",
+    "blue": "7A9E8C",
+    "magenta": "C4847A",
+    "cyan": "7DB39A",
+    "bright_red": "E88B80",
+    "bright_yellow": "E8B86D",
+    "bright_blue": "9BBBA8",
+    "bright_magenta": "D4A090",
+    "bright_cyan": "A8D4C0",
+    "edge": "B8C4A8"
+  }
+}

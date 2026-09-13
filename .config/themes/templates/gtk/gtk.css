@@ -1,4 +1,4 @@
-/* GTK supplies the widget geometry and symbolic assets; Verdant supplies colors. */
+/* GTK supplies the widget geometry and symbolic assets; {{name}} supplies colors. */
 @import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
 @import url("colors.css");
 

@@ -1,7 +1,7 @@
-@define-color verdant_fill #8FB56A;
-@define-color verdant_accent #D4A05A;
-@define-color verdant_surface #2A3A24;
-@define-color verdant_muted #8A9584;
+@define-color palette_fill #8FB56A;
+@define-color palette_accent #D4A05A;
+@define-color palette_surface #2A3A24;
+@define-color palette_muted #8A9584;
 @define-color theme_bg_color #10180E;
 @define-color theme_base_color #1A2416;
 @define-color theme_fg_color #E4EBE0;
@@ -33,3 +33,12 @@
 @define-color wm_button_active_color_a #8FB56A;
 @define-color wm_button_active_color_b #8FB56A;
 @define-color wm_button_active_color_c #8FB56A;
+
+/* Colors referenced by the static Thunar overrides. */
+@define-color palette_bg #10180E;
+@define-color palette_bg_alt #1A2416;
+@define-color palette_border #6A7466;
+@define-color palette_fg #E4EBE0;
+@define-color palette_fg_dim #8A9584;
+@define-color palette_green #7DCE7A;
+@define-color palette_danger #D97070;

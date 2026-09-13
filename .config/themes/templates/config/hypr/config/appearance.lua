@@ -1,15 +1,15 @@
--- Verdant palette (shared with Waybar and Alacritty)
+-- {{name}} palette (shared with Waybar and Alacritty)
 local palette = {
-    bg     = "rgb(10180E)",
-    text   = "rgb(E4EBE0)",
-    muted  = "rgb(8A9584)",
-    grey   = "rgb(6A7466)",
-    fill   = "rgb(8FB56A)",
-    green  = "rgb(7DCE7A)",
-    accent = "rgb(D4A05A)",
-    danger = "rgb(D97070)",
-    active_border   = { colors = { "rgba(8FB56Aee)", "rgba(D4A05Aee)" }, angle = 45 },
-    inactive_border = "rgba(6A7466aa)",
+    bg     = "rgb({{bg}})",
+    text   = "rgb({{text}})",
+    muted  = "rgb({{muted}})",
+    grey   = "rgb({{border}})",
+    fill   = "rgb({{fill}})",
+    green  = "rgb({{success}})",
+    accent = "rgb({{accent}})",
+    danger = "rgb({{danger}})",
+    active_border   = { colors = { "rgba({{fill}}ee)", "rgba({{accent}}ee)" }, angle = 45 },
+    inactive_border = "rgba({{border}}aa)",
 }
 
 -- Look and feel configuration
@@ -37,7 +37,7 @@ hl.config({
             enabled      = true,
             range        = 4,
             render_power = 3,
-            color        = "rgba(10180Eee)",
+            color        = "rgba({{bg}}ee)",
         },
         blur = {
             enabled   = true,
@@ -53,8 +53,8 @@ hl.config({
         col = {
             border_active          = palette.active_border,
             border_inactive        = palette.inactive_border,
-            border_locked_active   = "rgba(D4A05Aee)",
-            border_locked_inactive = "rgba(6A7466aa)",
+            border_locked_active   = "rgba({{accent}}ee)",
+            border_locked_inactive = "rgba({{border}}aa)",
         },
         groupbar = {
             enabled     = true,
@@ -64,10 +64,10 @@ hl.config({
             text_color           = palette.text,
             text_color_inactive  = palette.muted,
             col = {
-                active          = "rgba(8FB56Acc)",
-                inactive        = "rgba(1A2416cc)",
-                locked_active   = "rgba(D4A05Acc)",
-                locked_inactive = "rgba(6A7466cc)",
+                active          = "rgba({{fill}}cc)",
+                inactive        = "rgba({{base}}cc)",
+                locked_active   = "rgba({{accent}}cc)",
+                locked_inactive = "rgba({{border}}cc)",
             },
         },
     },

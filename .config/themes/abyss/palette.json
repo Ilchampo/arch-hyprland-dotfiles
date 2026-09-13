@@ -1,0 +1,25 @@
+{
+  "name": "Abyss",
+  "colors": {
+    "bg": "061521",
+    "base": "0B2233",
+    "surface": "15394C",
+    "text": "D9EDF4",
+    "muted": "83A5B5",
+    "border": "416477",
+    "fill": "398DA8",
+    "success": "6CDACB",
+    "accent": "65D6EB",
+    "danger": "E07D91",
+    "bright": "EFFAFF",
+    "blue": "528FC2",
+    "magenta": "9A8AC4",
+    "cyan": "49B8C7",
+    "bright_red": "F39AAA",
+    "bright_yellow": "D9C68B",
+    "bright_blue": "8BBAE6",
+    "bright_magenta": "BAADE5",
+    "bright_cyan": "91E2EB",
+    "edge": "8BB7C9"
+  }
+}

@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""Render shared desktop templates from a named palette and refresh the session."""
+import argparse
+import fcntl
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+
+TOKEN = re.compile(r'\{\{([a-z_]+)(\.rgb)?\}\}')
+
+
+def load_theme(directory):
+    data = json.loads((directory / 'palette.json').read_text())
+    if not re.fullmatch(r'[a-z][a-z0-9-]*', directory.name):
+        raise ValueError(f'Invalid theme directory: {directory.name}')
+    if not re.fullmatch(r'[A-Za-z][A-Za-z0-9-]*', data['name']):
+        raise ValueError(f'Invalid theme name: {data["name"]}')
+    if not data['colors'] or any(not re.fullmatch(r'[0-9A-Fa-f]{6}', v)
+                                 for v in data['colors'].values()):
+        raise ValueError(f'Colors must be six-digit hex values: {directory}')
+    if not (directory / 'wallpaper.png').is_file():
+        raise ValueError(f'Missing wallpaper: {directory / "wallpaper.png"}')
+    return data
+
+
+def render(text, theme, slug):
+    values = dict(theme['colors'], name=theme['name'], id=slug)
+    def replace(match):
+        value = values[match[1]]
+        if match[2]:
+            return ', '.join(str(int(value[i:i+2], 16)) for i in (0, 2, 4))
+        return value
+    result = TOKEN.sub(replace, text)
+    if '{{' in result:
+        raise ValueError('Unresolved template token')
+    return result.encode()
+
+
+def outputs(root, source, slug, theme, assets_only=False):
+    result = {}
+    destinations = {'gtk': root / '.local/share/themes' / theme['name'] / 'gtk-3.0',
+                    'icons': root / '.local/share/icons' / theme['name']}
+    if not assets_only:
+        destinations['config'] = root / '.config'
+    for group, destination in destinations.items():
+        for path in sorted((source / 'templates' / group).rglob('*')):
+            if path.is_file():
+                result[destination / path.relative_to(source / 'templates' / group)] = render(path.read_text(), theme, slug)
+    if not assets_only:
+        path = root / '.config/gtk-3.0/settings.ini'
+        text = path.read_text() if path.exists() else '[Settings]\n'
+        for key in ('gtk-theme-name', 'gtk-icon-theme-name'):
+            line = f'{key}={theme["name"]}'
+            if re.search(rf'^{key}=.*$', text, re.M):
+                text = re.sub(rf'^{key}=.*$', line, text, flags=re.M)
+            else:
+                text = text.rstrip() + '\n' + line + '\n'
+        result[path] = text.encode()
+    if not result:
+        raise ValueError('No theme templates found')
+    return result
+
+
+def atomic_write(path, content):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix='.' + path.name + '-', dir=path.parent)
+    try:
+        with os.fdopen(fd, 'wb') as stream:
+            stream.write(content)
+        os.chmod(temporary, path.stat().st_mode & 0o777 if path.exists() else 0o644)
+        os.replace(temporary, path)
+    finally:
+        Path(temporary).unlink(missing_ok=True)
+
+
+def install(files):
+    # Validate/render everything before writing. Restore prior contents on I/O failure.
+    previous = {p: p.read_bytes() if p.exists() else None for p in files}
+    changed = []
+    try:
+        for path, content in files.items():
+            if previous[path] != content:
+                atomic_write(path, content)
+                changed.append(path)
+    except OSError:
+        for path in reversed(changed):
+            if previous[path] is None:
+                path.unlink(missing_ok=True)
+            else:
+                atomic_write(path, previous[path])
+        raise
+
+
+def command(args):
+    return subprocess.run(args, text=True, capture_output=True, timeout=10)
+
+
+def refresh(root, slug, theme):
+    warnings = []
+    def run(args, optional=False):
+        try:
+            result = command(args)
+            if result.returncode and not optional:
+                warnings.append(f'{args[0]}: {result.stderr.strip() or result.stdout.strip() or "failed"}')
+            return result
+        except (OSError, subprocess.TimeoutExpired) as error:
+            if not optional:
+                warnings.append(f'{args[0]}: {error}')
+            return None
+    for key in ('icon-theme', 'gtk-theme'):
+        run(['gsettings', 'set', 'org.gnome.desktop.interface', key, theme['name']])
+    if os.environ.get('HYPRLAND_INSTANCE_SIGNATURE'):
+        run(['hyprctl', 'reload'])
+        monitors = run(['hyprctl', '-j', 'monitors'])
+        wallpaper = root / '.config/themes' / slug / 'wallpaper.png'
+        # Empty target is only a fallback; explicit targets update existing outputs.
+        targets = ['']
+        if monitors and monitors.returncode == 0:
+            try:
+                targets += [m['name'] for m in json.loads(monitors.stdout)]
+            except (ValueError, KeyError, TypeError):
+                warnings.append('Could not read monitor names for wallpaper refresh')
+        for monitor in targets:
+            run(['hyprctl', 'hyprpaper', 'wallpaper', f'{monitor},{wallpaper},cover'])
+    for process, args in [('waybar', ['pkill', '-USR2', '-u', str(os.getuid()), '-x', 'waybar']),
+                          ('mako', ['makoctl', 'reload'])]:
+        running = run(['pgrep', '-u', str(os.getuid()), '-x', process], optional=True)
+        if running and running.returncode == 0:
+            run(args)
+    # Alacritty watches its imported color file. Wofi reads styles when opened.
+    # Do not terminate Thunar: it may be copying files.
+    message = f'{theme["name"]} applied' if not warnings else f'{theme["name"]} saved; some components could not refresh'
+    if shutil.which('notify-send'):
+        run(['notify-send', 'Desktop theme', message], optional=True)
+    for warning in warnings:
+        print('Warning: ' + warning, file=sys.stderr)
+    return warnings
+
+
+def choose(root, themes, current):
+    labels = {f'{theme["name"]}' + ('  (current)' if slug == current else ''): slug
+              for slug, theme in themes.items()}
+    result = subprocess.run(['wofi', '--dmenu', '--conf', str(root / '.config/themes/selector.conf'),
+                             '--style', str(root / '.config/wofi/style.css'),
+                             '--cache-file', '/dev/null'],
+                            input='\n'.join(labels) + '\n', text=True, capture_output=True)
+    if result.returncode == 1:
+        return None
+    if result.returncode:
+        raise RuntimeError(result.stderr.strip() or 'Wofi failed')
+    if not result.stdout.strip():
+        return None
+    selection = result.stdout.strip()
+    if selection not in labels:
+        raise ValueError('Select one of the listed themes')
+    return labels[selection]
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('theme', nargs='?', help='theme directory name; omit to open Wofi')
+    parser.add_argument('--restore', action='store_true', help='reapply the saved choice, defaulting to Verdant')
+    parser.add_argument('--current', action='store_true', help='print the saved choice')
+    parser.add_argument('--list', action='store_true', help='list available themes')
+    parser.add_argument('--no-reload', action='store_true', help='render files without contacting the desktop')
+    parser.add_argument('--root', type=Path, default=Path.home(), help='home-shaped output directory (requires --no-reload or --build)')
+    parser.add_argument('--build', action='store_true', help='build all theme assets and default configs without saving a choice or reloading')
+    args = parser.parse_args()
+    root = args.root.resolve()
+    if root != Path.home().resolve() and not (args.no_reload or args.build):
+        parser.error('--root requires --no-reload or --build')
+    source = root / '.config/themes'
+    themes = {p.parent.name: load_theme(p.parent) for p in sorted(source.glob('*/palette.json'))}
+    if not themes:
+        raise ValueError(f'No palettes found in {source}')
+    if len({t['name'] for t in themes.values()}) != len(themes):
+        raise ValueError('Theme names must be unique')
+    state = root / '.local/state/theme-switch/current'
+    current = state.read_text().strip() if state.exists() else 'verdant'
+    if args.current:
+        print(current)
+        return
+    if args.list:
+        print('\n'.join(themes))
+        return
+    slug = args.theme
+    if not slug:
+        slug = (current if args.restore else 'verdant') if (args.restore or args.build) else choose(root, themes, current)
+    if slug is None:
+        return
+    slug = slug.lower()
+    if slug not in themes:
+        raise ValueError(f'Unknown theme: {slug}')
+    # Build all named assets so GTK/icon lookup never races with a missing theme.
+    files = {}
+    for name, theme in themes.items():
+        files.update(outputs(root, source, name, theme, assets_only=True))
+    files.update(outputs(root, source, slug, themes[slug]))
+    if args.build:
+        install(files)
+        print(f'Built {len(themes)} themes; default {slug}')
+        return
+    state.parent.mkdir(parents=True, exist_ok=True)
+    with (state.parent / 'switch.lock').open('w') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        files[state] = (slug + '\n').encode()
+        install(files)
+        warnings = [] if args.no_reload else refresh(root, slug, themes[slug])
+    print(f'{themes[slug]["name"]}: files saved' + (' (refresh warnings above)' if warnings else ''))
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except (OSError, ValueError, KeyError, RuntimeError) as error:
+        print(f'Theme switch failed: {error}', file=sys.stderr)
+        sys.exit(1)
