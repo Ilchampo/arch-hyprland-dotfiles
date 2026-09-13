@@ -1,0 +1,25 @@
+{
+  "name": "Abstract",
+  "colors": {
+    "bg": "140F24",
+    "base": "201833",
+    "surface": "37264F",
+    "text": "F0E8FA",
+    "muted": "AC9DBF",
+    "border": "716086",
+    "fill": "B88AE8",
+    "success": "6DDECA",
+    "accent": "F3A0CC",
+    "danger": "F17D98",
+    "bright": "FFF7FF",
+    "blue": "779CF2",
+    "magenta": "D988DD",
+    "cyan": "63CDE5",
+    "bright_red": "FFA3B5",
+    "bright_yellow": "FFD19C",
+    "bright_blue": "A4BCFF",
+    "bright_magenta": "F0AEF1",
+    "bright_cyan": "A0EAF4",
+    "edge": "C6ACDD"
+  }
+}

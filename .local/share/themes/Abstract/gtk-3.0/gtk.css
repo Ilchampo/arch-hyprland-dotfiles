@@ -1,0 +1,172 @@
+/* GTK supplies the widget geometry and symbolic assets; Abstract supplies colors. */
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+@import url("colors.css");
+
+* {
+    -gtk-icon-palette: success @success_color, warning @warning_color, error @error_color;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
+/* Include detached menus and dialogs, which do not inherit .thunar. */
+window.background, dialog, messagedialog, .background {
+    background-color: @theme_bg_color;
+    color: @theme_fg_color;
+}
+decoration {
+    border: 1px solid @borders;
+    box-shadow: 0 3px 12px alpha(@theme_bg_color, 0.65);
+}
+headerbar, .titlebar, toolbar, menubar, statusbar, actionbar {
+    background-image: none;
+    background-color: @theme_bg_color;
+    color: @theme_fg_color;
+    border-color: @borders;
+    box-shadow: none;
+}
+.view, textview text, iconview, treeview, list, flowbox, calendar {
+    background-color: @theme_base_color;
+    color: @theme_text_color;
+}
+.view:selected, .view:selected:focus, .view:selected:backdrop,
+iconview:selected, treeview:selected, row:selected, flowboxchild:selected,
+selection, entry selection, textview text selection {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
+.sidebar, .sidebar .view, placessidebar, stacksidebar {
+    background-color: @theme_base_color;
+    color: @theme_fg_color;
+}
+frame > border, .frame, scrolledwindow, viewport {
+    border-color: @borders;
+}
+separator, paned > separator {
+    background-color: @borders;
+    background-image: none;
+    color: @borders;
+}
+button, entry, spinbutton, combobox button, treeview header button {
+    background-image: none;
+    background-color: @theme_base_color;
+    color: @theme_fg_color;
+    border-color: @borders;
+    box-shadow: none;
+    outline-color: @palette_accent;
+}
+button:hover, combobox button:hover, treeview header button:hover,
+row:hover, flowboxchild:hover {
+    background-image: none;
+    background-color: @palette_surface;
+    color: @theme_fg_color;
+}
+button:active, button:checked, button.suggested-action,
+button.suggested-action:hover, button.suggested-action:active {
+    background-image: none;
+    background-color: @palette_fill;
+    color: @theme_selected_fg_color;
+    border-color: @palette_fill;
+}
+button.destructive-action, button.destructive-action:hover {
+    background-image: none;
+    background-color: @error_color;
+    color: @theme_bg_color;
+    border-color: @error_color;
+}
+entry:focus, spinbutton:focus, button:focus {
+    border-color: @palette_accent;
+    box-shadow: inset 0 0 0 1px alpha(@palette_accent, 0.35);
+}
+entry progress, progressbar progress, scale highlight {
+    background-image: none;
+    background-color: @palette_fill;
+    border-color: @palette_fill;
+}
+progressbar trough, scale trough, levelbar trough {
+    background-color: @palette_surface;
+    border-color: @borders;
+}
+scale slider {
+    background-image: none;
+    background-color: @palette_fill;
+    border-color: @palette_fill;
+    box-shadow: none;
+}
+check, radio, switch {
+    background-image: none;
+    background-color: @theme_base_color;
+    color: @theme_fg_color;
+    border-color: @borders;
+    box-shadow: none;
+}
+check:checked, check:indeterminate, radio:checked, radio:indeterminate, switch:checked {
+    background-image: none;
+    background-color: @palette_fill;
+    color: @theme_selected_fg_color;
+    border-color: @palette_fill;
+}
+switch slider {
+    background-image: none;
+    background-color: @theme_fg_color;
+    border-color: @borders;
+    box-shadow: none;
+}
+menu, .menu, .context-menu, popover, popover.background, tooltip, tooltip.background {
+    background-color: @theme_base_color;
+    background-image: none;
+    color: @theme_fg_color;
+    border: 1px solid @borders;
+    border-radius: 8px;
+}
+menuitem, modelbutton {
+    background-image: none;
+    background-color: transparent;
+    color: @theme_fg_color;
+}
+menuitem:hover, menuitem:selected, modelbutton:hover, modelbutton:selected {
+    background-color: @palette_surface;
+    color: @theme_fg_color;
+}
+menuitem accelerator { color: @palette_muted; }
+tooltip label { color: @theme_fg_color; }
+notebook > header {
+    background-color: @theme_bg_color;
+    border-color: @borders;
+}
+notebook > stack, notebook > stack:not(:only-child),
+notebook > stack:not(:only-child):backdrop {
+    background-color: @theme_base_color;
+    color: @theme_fg_color;
+}
+notebook > header > tabs > tab {
+    background-color: @theme_base_color;
+    color: @palette_muted;
+    border-color: @borders;
+    box-shadow: none;
+}
+notebook > header.top > tabs > tab:checked,
+notebook > header.bottom > tabs > tab:checked,
+notebook > header.left > tabs > tab:checked,
+notebook > header.right > tabs > tab:checked {
+    background-color: @palette_surface;
+    color: @theme_fg_color;
+    box-shadow: inset 0 -2px @palette_accent;
+}
+scrollbar, scrollbar trough { background-color: @theme_bg_color; }
+scrollbar slider {
+    background-color: @borders;
+    border-color: transparent;
+}
+scrollbar slider:hover, scrollbar slider:active { background-color: @palette_accent; }
+rubberband, .rubberband {
+    background-color: alpha(@palette_accent, 0.18);
+    border: 1px solid @palette_accent;
+}
+*:link, *:visited { color: @palette_accent; }
+*:disabled { color: @palette_muted; }
+button:disabled, entry:disabled {
+    background-image: none;
+    background-color: @theme_bg_color;
+    border-color: alpha(@borders, 0.5);
+    box-shadow: none;
+}
