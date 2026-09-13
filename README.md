@@ -1,6 +1,6 @@
 # arch-hyprland-dotfiles
 
-Arch Linux + Hyprland configuration with switchable Verdant and Abyss themes.
+Arch Linux + Hyprland configuration with switchable Verdant, Abyss and Mono themes.
 
 ## Apply and switch
 
@@ -10,12 +10,13 @@ use), and refreshes the desktop. It replaces the previous file backup in
 `~/.config/backup/last`; previous GTK session settings are saved there in
 `restore-gtk-session.sh`.
 
-Press **Super+W** to open the theme selector, select **Verdant** or **Abyss**,
+Press **Super+W** to open the theme selector, select **Verdant**, **Abyss**, or **Mono**,
 and press Enter (or click). Escape cancels without changing anything.
 
 You can also run:
 
 ```sh
+~/.local/bin/theme-switch mono
 ~/.local/bin/theme-switch abyss
 ~/.local/bin/theme-switch verdant
 ~/.local/bin/theme-switch --current
@@ -24,7 +25,11 @@ You can also run:
 
 Verdant retains the forest-green and amber palette. Abyss uses deep navy,
 ocean-blue surfaces, cyan highlights and the supplied underwater wallpaper.
-Both cover Hyprland borders/groups, Hyprpaper, Waybar (including workspace
+Mono uses charcoal backgrounds, silver folders, white highlights and a grayscale
+dune wallpaper. Its entire palette, including terminal ANSI colors and status
+colors, is monochrome. The current wallpaper is a provisional 1672×941 image;
+native 3840×2160 generation is still pending (see the theme’s `wallpaper.md`).
+All three cover Hyprland borders/groups, Hyprpaper, Waybar (including workspace
 indicators), Alacritty colors, Wofi, Mako, GTK 3/Thunar and folder/place icons.
 Application and file-type icons inherit from Adwaita and hicolor. GTK 4, Qt,
 and applications with their own themes are not controlled by this switcher.
@@ -44,7 +49,8 @@ losing the saved selection; `theme-switch --restore` retries the refresh.
 
 ## Theme sources
 
-- `.config/themes/verdant/palette.json` and `abyss/palette.json`: named colors.
+- `.config/themes/verdant/palette.json` and `abyss/palette.json`,
+  `mono/palette.json`: named colors.
 - `.config/themes/<theme>/wallpaper.png`: wallpaper, applied to all monitors.
 - `.config/themes/templates/config/`: shared theme-controlled app configuration.
 - `.config/themes/templates/gtk/`: shared GTK widget styling and palette aliases.
